@@ -14,12 +14,12 @@ func main() {
 	size := 100
 	wg.Add(size)
 	for i:=0;i<size;i++ {
-		go sendMessage(i,wg)
+		go sendMessage(i,&wg)
 	}
 	wg.Wait()
 }
 
-func sendMessage(id int,wg sync.WaitGroup) {
+func sendMessage(id int,wg *sync.WaitGroup) {
 	defer wg.Done()
 	url := "http://localhost:8080/v1/message"
 	method := "POST"
@@ -27,7 +27,7 @@ func sendMessage(id int,wg sync.WaitGroup) {
 	payload := strings.NewReader(`{
     "Msg_id":`+strconv.Itoa(id)+`,
     "Sender":"Tom",
-    "Msg":"Hello"
+    "Msg":"1111"
 }`)
 
 	client := &http.Client {}
